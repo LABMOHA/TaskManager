@@ -53,6 +53,7 @@ class TaskController extends Controller
 
     }
 
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -74,6 +75,11 @@ class TaskController extends Controller
         ]);
         $task->update($validateData);
         return redirect('tasks.home');
+    }
+    public function Update_stat(Task $task)
+    {
+        $task->is_completed=true;
+        return redirect('/');
     }
 
     /**
