@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use APP\models\Task;
+use App\Models\Task;
 
 class TaskController extends Controller
 {
@@ -13,8 +13,8 @@ class TaskController extends Controller
     public function index()
     {
         //
-        $tasks=Task::all();
-        return view('tasks.home');
+        $tasks=Task::with('user')->get();
+        return view('tasks.home',compact('tasks'));
 
     }
 
@@ -74,11 +74,13 @@ class TaskController extends Controller
             'description'=>'required|max:255'
         ]);
         $task->update($validateData);
-        return redirect('tasks.home');
+        return redirect('/');
     }
-    public function Update_stat(Task $task)
+    public function Update_stat(Task $task ,Request $request)
     {
         $task->is_completed=true;
+        $task->save();
+
         return redirect('/');
     }
 
